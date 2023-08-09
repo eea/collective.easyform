@@ -5,7 +5,9 @@ Changelog
 4.1.5 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Add filesize upload limit. [ThibautBorn]
+
+- update Dutch translations [ThibautBorn]
 
 
 4.1.4 (2023-07-27)
