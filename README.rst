@@ -1,312 +1,37 @@
-=================================
-EasyForm - Form Builder for Plone
-=================================
-
-.. image:: https://badge.fury.io/py/collective.easyform.svg
-    :target: https://badge.fury.io/py/collective.easyform
-    :alt: latest release version badge by Badge Fury
-
-.. image:: https://github.com/collective/collective.easyform/actions/workflows/test.yml/badge.svg
-    :target: https://github.com/collective/collective.easyform/actions
-    :alt: Travis CI status
-
-.. image:: https://coveralls.io/repos/github/collective/collective.easyform/badge.svg?branch=master
-    :target: https://coveralls.io/github/collective/collective.easyform?branch=master
-    :alt: Coveralls status
-
-
-The add on ``collective.easyform`` adds Plone content types for form creation.
-
-EasyForm provides a Plone form builder through-the-web using fields, widgets, actions and validators (based on `Dexterity <https://github.com/plone/plone.dexterity>`_).
-
-Form input can be saved or emailed.
-A simple and user-friendly interface allows non-programmers to create custom forms.
-
-
-Installation
+Introduction
 ============
 
-Install collective.easyform by adding it to your buildout:
+.. image:: https://travis-ci.org/collective/collective.easyform.png?branch=master
+    :target: https://travis-ci.org/collective/collective.easyform
+    :alt: Travis CI status
 
-.. code-block:: shell
+.. image:: https://coveralls.io/repos/collective/collective.easyform/badge.svg?branch=master
+    :target: https://coveralls.io/r/collective/collective.easyform?branch=master
+    :alt: Coveralls status
 
-    [buildout]
+.. image:: https://badge.fury.io/py/collective.easyform.svg
+    :target: http://badge.fury.io/py/collective.easyform
+    :alt: Fury Python
+    
+Collective.easyform enables creation of custom forms using dexterity. This Plone package is similar to Products.PloneFormGen that is based on Archetypes. Dexterity is a new platform for content types in Plone and will be used instead of Archetypes in Plone 5. Easyform provides a Plone form builder through-the-web using fields, widgets, actions and validators.
 
-    ...
-
-    eggs =
-        collective.easyform
-
-
-Run buildout:
-
-.. code-block:: shell
-
-    bin/buildout
-
-The last step is to activate ``EasyForm`` in the Add-ons control panel.
-
-
-Migration from PloneFormGen
-===========================
-
-With PloneFormGen installed, open the following url:
-
-``@@migrate-ploneformgen``
-
+Similarly to PloneFormGen, Easyform is used to generate web forms that save or mail form input. Simple and user-friendly interface allows non-programmers to create custom forms. 
 
 Usage
 =====
 
-- Choose EasyForm from the toolbars 'Add new' menu.
-  Insert form title, description and other settings.
-- Add fields or fieldsets to create a unique form that will meet your particular requirements.
-  There are enough basic field types to satisfy any demands:
+* Install product (in your buildout.cfg add ‘collective.easyform’ to the eggs section), rerun your Plone instance and activate Collective.easyform. 
+* Choose Easyform from the 'Add new' drop-down menu. Insert form title, description and other settings.  
+* Add fields or fieldsets to create a unique form that will meet your particular requirements.  There are enough basic field types to satisfy any demands: File Upload, Text line (String), Integer, Yes/No, Date, Date/Time, Floating-point number, Choice, Rich Text, Image, Multiple Choice, Text, Password, ReСaptcha field. 
+* Continue to customize form by setting the order of fields, defining required and hidden ones, choosing validator, if necessary, and other field type specific settings.
 
-  - File Upload
-  - Text line (String)
-  - Integer
-  - Yes/No
-  - Date, Date/Time
-  - Floating-point number
-  - Choice
-  - Rich Text
-  - Image
-  - Multiple Choice
-  - Text
-  - Password
-  - ReСaptcha
+See quick overview of this product: 
 
-- Continue to customize form by setting the order of fields,
-  defining required and hidden ones,
-  choosing validator, if necessary,
-  and other field type specific settings.
-
-Click on the picture below for a short introduction video:
-
-.. image:: docs/images/easyform-youtube.png
+.. image:: http://quintagroup.com/services/plone-development/products/easyform/easyform-youtube.png
     :target: https://www.youtube.com/watch?v=DMCYnYE9RKU
-    :alt: EasyForm instructional video
-
-Using conditional fields
-------------------------
-
-Under Advanced > field depends on, you can define conditions to hide a field and only fade it in when a condition is fulfilled.
-We are using pat-depends here, all options are documented in the `pat-depends docs <https://patternslib.com/demos/depends>`_.
-
-You can also set a CSS class string for every field under Advanced > CSS Class.
-
-.. image:: docs/images/conditional_fields_and_field_css.png
-    :width: 350
-
-.. image:: docs/images/form_multicolumns.png
-
-Since the form is marked with the ``row`` css class you can use the existing Bootstrap 5 CSS column classes for the fields
-to create simple column layouts. See the `Bootstrap Grid System <https://getbootstrap.com/docs/5.2/layout/grid/>`_ documentation
-for more information.
-
-For more complex layouts you can also add your own CSS classes and definitions. Here is one example CSS
-to define a form with up to 4 columns and different col span for individual fields.
-
-
-.. code-block:: css
-
-    .easyformForm fieldset{
-      display: grid;
-      gap: 1em;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-    }
-
-    .easyformForm .field{
-      background-color: #eeeeee;
-      padding: 0.5em;
-      grid-column: auto / span 2;
-    }
-
-    .easyformForm fieldset > p:first-of-type{
-      background-color: transparent;
-      grid-column: auto / span 4;
-    }
-
-    .easyformForm .field.formCol14{
-      grid-column: auto / span 1;
-    }
-
-    .easyformForm .field.formCol34{
-      grid-column: auto / span 3;
-    }
-
-    .easyformForm .field.formCol44{
-      grid-column: auto / span 4;
-    }
-
-
-ReCaptcha support
-=================
-
-Install ``collective.easyform`` with the  ``recaptcha`` extra:
-
-.. code-block:: shell
-
-    [buildout]
-
-    ...
-
-    eggs =
-        collective.easyform [recaptcha]
-
-
-Run buildout. In the Add-ons control panel, activate both EasyForm and the ReCaptcha widget.
-
-In the ReCaptcha control panel, set the public key and private key values you obtained from https://developers.google.com/recaptcha/ (you can use reCAPTCHA V2).
-
-In the EasyFrom control panel (``/@@easyform-controlpanel``), add the "ReCaptcha" field to "Allowed Fields".
-Alternatively, activate it by adding it as an ``registry.xml`` entry for Generic Setup:
-
-.. code-block:: xml
-
-    <record name="easyform.allowedFields">
-      <value purge="False">
-        <element>collective.easyform.fields.ReCaptcha</element>
-      </value>
-    </record>
-
-Add the ReCaptcha field to the forms where you want to use it.
-Use the field type ``ReCaptcha`` and leave ``require`` unchecked.
-
-As a last step you might want to avoid including the recaptcha field in the thank you page and in the mailer action.
-To do that, edit the form, go to the "Thanks page" settings, disable "Show all fields" and then include only those you want.
-Likewise for the mailer: open the form actions via the Actions toolbar menu and edit the mailer settings accordingly.
-
-
-collective.z3cform.norobots support
-===================================
-
-Install ``collective.easyform`` with the  ``norobots`` extra:
-
-.. code-block:: shell
-
-    [buildout]
-
-    ...
-
-    eggs =
-        collective.easyform [norobots]
-
-
-Run buildout. In the Add-ons control panel, install EasyForm.
-
-In the EasyFrom control panel (``/@@easyform-controlpanel``), add the "NorobotCaptcha" field to "Allowed Fields".
-Alternatively, activate it by adding it as an ``registry.xml`` entry for Generic Setup:
-
-.. code-block:: xml
-
-    <record name="easyform.allowedFields">
-      <value purge="False">
-        <element>collective.easyform.fields.NorobotCaptcha</element>
-      </value>
-    </record>
-
-Add the NorobotCaptcha field to the forms where you want to use it.
-Use the field type ``NorobotCaptcha`` and leave ``require`` unchecked.
-
-As a last step you might want to avoid including the norobotcaptcha field in the thanks page and the mailer action.
-To do that, edit the form, go to the "Thanks page" settings, disable "Show all fields" and then include only those you want.
-Likewise for the mailer: open the form actions via the Actions toolbar menu and edit the mailer settings accordingly.
-
-
-Download XLSX from savedata adapter support
-===========================================
-
-Install ``collective.easyform`` with the  ``downloadxlsx`` extra:
-
-.. code-block:: shell
-
-    [buildout]
-
-    ...
-
-    eggs =
-        collective.easyform [downloadxlsx]
-
-
-This gives you the option to download the saved data as XLSX using openpyxl to generate the XLSX file.
-
-
-Actions
-=======
-
-You can choose between the following actions after form submission:
-
-* Mailer
-* DataStorage
-* CustomScript
-
-The mailer stores a HTML template for sending the results of the form. You can override it with a file named
-`easyform_mail_body_default.pt` in your site. If it is not found the default from the `default_schemata` directory
-of this package is taken. If you plan to override start with the the `mail_body_default.pt` file and make sure
-it is a valid pagetemplate.
-
-
-Translations
-============
-
-This add-on has been translated into
-
-- Basque
-- Brazilian Portuguese
-- Deutsch
-- Dutch
-- English
-- French
-- Italian
-- Japanese
-- Spanish
-- Ukrainian
-
-
-Related Addons
-==============
-
-**Note:** This Plone package is similar to `Archetypes <http://docs.plone.org/develop/plone/content/archetypes/>`_ based `Products.PloneFormGen <https://github.com/smcmahon/Products.PloneFormGen>`_ for Plone versions 1 to 4. Now, Dexterity is the default framework for building content types in Plone 5. ``collective.easyform`` is based on Dexterity.
-
-
-Source Code and Contributions
-=============================
-
-If you want to help with the development (improvement, update, bug-fixing, ...) of ``collective.easyform`` this is a great idea!
-
-- `Source code at Github <https://github.com/collective/collective.easyform>`_
-- `Issue tracker at Github <https://github.com/collective/collective.easyform/issues>`_
-
-You can clone it or `get access to the github-collective <https://github.com/collective>`_ and work directly on the project.
-
-Please do larger changes on a branch and submit a Pull Request.
-
-Maintainer of ``collective.easyform`` is the Plone Collective community.
-
-We appreciate any contribution !
-
-For new release, please contact one of the owners or maintainers mentioned at the `Python Package Index page <https://pypi.python.org/pypi/collective.easyform>`_.
-
-
-Contribute
-==========
-
-- Issue Tracker: https://github.com/collective/collective.easyform/issues
-- Source Code: https://github.com/collective/collective.easyform
-
-
-License
-=======
-
-The project is licensed under the GPLv2.
-
+    :alt: Collective.easyform
 
 Compatibility
-=============
+-------------
 
-- 1.x targets Plone 4.x
-- 2.x targets Plone 5.x onwards
-- 3.x targets Plone 5.2
-- 4.x targets Plone 6, on Python 3
+Plone 4.3.2

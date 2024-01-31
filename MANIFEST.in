@@ -1,12 +1,5 @@
-graft docs
-graft src/collective
+recursive-include collective *
+recursive-include docs *
 include *.rst
-global-exclude *.pyc __pycache__
-exclude *.sh
-exclude .*.cfg
-exclude .coveragerc
-exclude .DS_Store
-exclude .tx
-exclude .tx/config
-exclude buildout.cfg
-exclude api.http
+global-exclude *.pyc
+prune .tx
